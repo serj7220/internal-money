@@ -101,7 +101,7 @@ img {
   border: none;
   cursor: pointer;
   margin-right: 0.5rem;
-  transition: opacity 0.2s ease-in;
+  transition: opacity 0.3s ease-in;
   outline: none;
   min-width: 150px;
   border-radius: 20px;
@@ -212,7 +212,6 @@ img {
   font-weight: bold;
   border: #ccc solid 1px;
 }
-
 
 .btn:hover {
   opacity: 0.8;

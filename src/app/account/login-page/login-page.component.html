@@ -1,1 +1,66 @@
-<p>login-page works!</p>
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <img class="logo" src="../../../assets/img/logo.png" width="20%">
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+  >
+    <input
+      id="email"
+      type="email"
+      placeholder="E-mail address"
+      formControlName="email"
+    >
+    <div
+      *ngIf="form.get('email').touched && form.get('email').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('email').errors.required">
+        The e-mail field is required
+      </small>
+      <small *ngIf="form.get('email').errors.email">
+        The email field must contain a valid email
+      </small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}"
+  >
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+    >
+    <div
+      *ngIf="form.get('password').touched && form.get('password').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('password').errors.required">
+        The password field is required
+      </small>
+      <small *ngIf="form.get('password').errors.minlength">
+        Password must be at least
+        {{form.get('password').errors.minlength.requiredLength}}
+        characters. Now it is
+        {{form.get('password').errors.minlength.actualLength}}
+        character(s)
+      </small>
+
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-login"
+  >Login</button>
+<!--  [disabled]="form.invalid"-->
+
+  <div class="loginSeparator">
+    <span class="textInSeparator">or</span>
+  </div>
+
+  <a routerLink="/account/registration" class="button secondary">Open account</a>
+
+</form>
