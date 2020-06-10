@@ -1,5 +1,10 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()">
   <img class="logo" src="../../../assets/img/logo.png" width="20%">
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{ error}}
+  </div>
+
   <div
     class="form-control"
     [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
@@ -55,7 +60,7 @@
     type="submit"
     class="btn btn-login"
   >Login</button>
-<!--  [disabled]="form.invalid"-->
+<!--  [disabled]="form.invalid || submitted" -->
 
   <div class="loginSeparator">
     <span class="textInSeparator">or</span>
