@@ -1,1 +1,114 @@
-<p>registration-page works!</p>
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+
+  <div class="header-signup">
+    <h1>
+      Sign up for Parrot Wings
+    </h1>
+    <span>The convenient way to send and receive payments</span>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="signup.error$ | async as error">
+    {{ error }}
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('name').touched && form.get('name').invalid}"
+  >
+    <input
+      id="name"
+      type="text"
+      placeholder="Your Name"
+      formControlName="name"
+    >
+    <div
+      *ngIf="form.get('name').touched && form.get('name').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('name').errors.required">
+        The name field is required
+      </small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+  >
+    <input
+      id="email"
+      type="email"
+      placeholder="E-mail address"
+      formControlName="email"
+    >
+    <div
+      *ngIf="form.get('email').touched && form.get('email').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('email').errors.required">
+        The e-mail field is required
+      </small>
+      <small *ngIf="form.get('email').errors.email">
+        The email field must contain a valid email
+      </small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}"
+  >
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+    >
+    <div
+      *ngIf="form.get('password').touched && form.get('password').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('password').errors.required">
+        The password field is required
+      </small>
+      <small *ngIf="form.get('password').errors.minlength">
+        Password must be at least
+        {{form.get('password').errors.minlength.requiredLength}}
+        characters. Now it is
+        {{form.get('password').errors.minlength.actualLength}}
+        character(s)
+      </small>
+
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{invalid: form.get('confirmPassword').touched && form.get('confirmPassword').invalid}"
+  >
+    <input
+      id="confirmPassword"
+      type="password"
+      placeholder="Confirm Your Password"
+      formControlName="confirmPassword"
+    >
+    <div
+      *ngIf="form.get('confirmPassword').touched && form.get('confirmPassword').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('confirmPassword').errors.required">
+        Confirm your password
+      </small>
+
+      <small class="form-text text-danger" *ngIf="form.controls.confirmPassword.errors">
+        {{form.controls.confirmPassword.errors.compare?.message}}
+      </small>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-login"
+  >Sign up</button>
+
+</form>

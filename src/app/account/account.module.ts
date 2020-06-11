@@ -10,6 +10,8 @@ import {DashboardPageComponent} from './dashboard-page/dashboard-page.component'
 import {TransactionPageComponent} from './transaction-page/transaction-page.component';
 import {AuthService} from './shared/services/auth.service';
 import { SharedModule } from '../shared/shared.module';
+import {AuthGuard} from './shared/services/auth.guard';
+import {SignupService} from './shared/services/signup.service';
 
 @NgModule({
   declarations: [AccountLayoutComponent, LoginPageComponent, RegistrationPageComponent, DashboardPageComponent],
@@ -24,15 +26,15 @@ import { SharedModule } from '../shared/shared.module';
           {path: '', redirectTo: '/account/login', pathMatch: 'full'},
           {path: 'login', component: LoginPageComponent},
           {path: 'registration', component: RegistrationPageComponent},
-          {path: 'dashboard', component: DashboardPageComponent},
-          {path: 'transaction', component: TransactionPageComponent}
+          {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
+          {path: 'transaction', component: TransactionPageComponent, canActivate: [AuthGuard]}
         ]
       }
       ]
     )
   ],
   exports: [RouterModule],
-  providers: [AuthService]
+  providers: [AuthService, AuthGuard, SignupService]
 })
 export class AccountModule {
 

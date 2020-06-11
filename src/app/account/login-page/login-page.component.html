@@ -2,7 +2,11 @@
   <img class="logo" src="../../../assets/img/logo.png" width="20%">
 
   <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
-    {{ error}}
+    {{ error }}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
   </div>
 
   <div
