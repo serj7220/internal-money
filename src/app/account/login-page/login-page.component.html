@@ -11,7 +11,7 @@
 
   <div
     class="form-control"
-    [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+    [ngClass]="{invalid: (form.get('email').touched || submitted)&& form.get('email').invalid}"
   >
     <input
       id="email"
@@ -20,7 +20,7 @@
       formControlName="email"
     >
     <div
-      *ngIf="form.get('email').touched && form.get('email').invalid"
+      *ngIf="(form.get('email').touched || submitted) && form.get('email').invalid"
       class="validation"
     >
       <small *ngIf="form.get('email').errors.required">
@@ -34,7 +34,7 @@
 
   <div
     class="form-control"
-    [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}"
+    [ngClass]="{invalid: (form.get('password').touched || submitted) && form.get('password').invalid}"
   >
     <input
       id="password"
@@ -43,7 +43,7 @@
       formControlName="password"
     >
     <div
-      *ngIf="form.get('password').touched && form.get('password').invalid"
+      *ngIf="(form.get('password').touched || submitted) && form.get('password').invalid"
       class="validation"
     >
       <small *ngIf="form.get('password').errors.required">
@@ -64,7 +64,6 @@
     type="submit"
     class="btn btn-login"
   >Login</button>
-<!--  [disabled]="form.invalid || submitted" -->
 
   <div class="loginSeparator">
     <span class="textInSeparator">or</span>

@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-page.component.scss']
 })
 export class DashboardPageComponent implements OnInit {
+  greeting: string = 'Good Day'
+  username: string = ''
 
   constructor() { }
 

@@ -14,6 +14,7 @@ import {SignupService} from '../shared/services/signup.service';
 export class RegistrationPageComponent implements OnInit {
 
   form: FormGroup
+  submitted = false
 
   constructor(
     public signup: SignupService,
@@ -41,6 +42,7 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   submit() {
+    this.submitted = true;
     if(this.form.invalid){
       return
     }
@@ -51,11 +53,15 @@ export class RegistrationPageComponent implements OnInit {
       password: this.form.value.password
     }
 
-    console.log('User',user)
     this.signup.signup(user).subscribe(() => {
       this.form.reset()
       this.router.navigate(['/account', 'dashboard'])
+      this.submitted = false
     })
+  }
+
+  login() {
+    this.router.navigate(['/account', 'login'])
   }
 }
 

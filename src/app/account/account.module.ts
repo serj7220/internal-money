@@ -8,7 +8,6 @@ import {LoginPageComponent} from './login-page/login-page.component';
 import {RegistrationPageComponent} from './registration-page/registration-page.component';
 import {DashboardPageComponent} from './dashboard-page/dashboard-page.component';
 import {TransactionPageComponent} from './transaction-page/transaction-page.component';
-import {AuthService} from './shared/services/auth.service';
 import { SharedModule } from '../shared/shared.module';
 import {AuthGuard} from './shared/services/auth.guard';
 import {SignupService} from './shared/services/signup.service';
@@ -34,7 +33,7 @@ import {SignupService} from './shared/services/signup.service';
     )
   ],
   exports: [RouterModule],
-  providers: [AuthService, AuthGuard, SignupService]
+  providers: [AuthGuard, SignupService]
 })
 export class AccountModule {
 
