@@ -1,8 +1,17 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()">
   <img class="logo" src="../../../assets/img/logo.png" width="20%">
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{ error }}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
+  </div>
+
   <div
     class="form-control"
-    [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+    [ngClass]="{invalid: (form.get('email').touched || submitted)&& form.get('email').invalid}"
   >
     <input
       id="email"
@@ -11,7 +20,7 @@
       formControlName="email"
     >
     <div
-      *ngIf="form.get('email').touched && form.get('email').invalid"
+      *ngIf="(form.get('email').touched || submitted) && form.get('email').invalid"
       class="validation"
     >
       <small *ngIf="form.get('email').errors.required">
@@ -25,7 +34,7 @@
 
   <div
     class="form-control"
-    [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}"
+    [ngClass]="{invalid: (form.get('password').touched || submitted) && form.get('password').invalid}"
   >
     <input
       id="password"
@@ -34,7 +43,7 @@
       formControlName="password"
     >
     <div
-      *ngIf="form.get('password').touched && form.get('password').invalid"
+      *ngIf="(form.get('password').touched || submitted) && form.get('password').invalid"
       class="validation"
     >
       <small *ngIf="form.get('password').errors.required">
@@ -55,7 +64,6 @@
     type="submit"
     class="btn btn-login"
   >Login</button>
-<!--  [disabled]="form.invalid"-->
 
   <div class="loginSeparator">
     <span class="textInSeparator">or</span>

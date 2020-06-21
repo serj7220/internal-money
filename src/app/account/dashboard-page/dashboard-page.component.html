@@ -1,1 +1,12 @@
-<p>dashboard-page works!</p>
+<div class="main-container">
+    <span class="main-container__header">
+      {{greeting}}, {{user.username}}
+    </span>
+    <span class="available-text">#ID: {{user.id}}</span>
+    <div class="main-container__balance">
+      <span class="header-balance">Parrot Wings Balance</span>
+      <span class="summ-balance">{{user.balance}} $</span>
+      <span class="available-text">Available</span>
+      <a href="#" class="transfer-money-link">Transfer Money</a>
+    </div>
+</div>

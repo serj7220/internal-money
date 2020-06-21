@@ -293,6 +293,15 @@ table th {
     color: #fff;
   }
 
+  span {
+    font-size: 14px;
+    font-weight: normal;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    padding: 5px;
+    float: right;
+  }
+
   ul {
     display: flex;
   }
