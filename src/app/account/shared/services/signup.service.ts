@@ -4,6 +4,7 @@ import {Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 
 import {DbAuthResponse, User} from '../../../shared/interfaces';
+import {environment} from 'src/environments/environment';
 
 @Injectable()
 export class SignupService{
@@ -13,7 +14,7 @@ export class SignupService{
   constructor(private http: HttpClient){}
 
   signup(user: User): Observable<any>{
-    return this.http.post('http://193.124.114.46:3001/users', user)
+    return this.http.post(`${environment.DbCreateUserUrl}`, user)
       .pipe(
         tap(this.setToken),
         catchError(this.handleError.bind(this))

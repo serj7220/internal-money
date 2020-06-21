@@ -11,9 +11,19 @@ import {TransactionPageComponent} from './transaction-page/transaction-page.comp
 import { SharedModule } from '../shared/shared.module';
 import {AuthGuard} from './shared/services/auth.guard';
 import {SignupService} from './shared/services/signup.service';
+import { TransactionsPageComponent } from './transactions-page/transactions-page.component';
+import {SearchNamePipe} from './shared/pipes/search-name.pipe';
+import {SearchDatePipe} from './shared/pipes/search-date.pipe';
 
 @NgModule({
-  declarations: [AccountLayoutComponent, LoginPageComponent, RegistrationPageComponent, DashboardPageComponent],
+  declarations: [
+    AccountLayoutComponent,
+    LoginPageComponent,
+    RegistrationPageComponent,
+    DashboardPageComponent,
+    TransactionsPageComponent,
+    SearchNamePipe,
+    SearchDatePipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +36,8 @@ import {SignupService} from './shared/services/signup.service';
           {path: 'login', component: LoginPageComponent},
           {path: 'registration', component: RegistrationPageComponent},
           {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
-          {path: 'transaction', component: TransactionPageComponent, canActivate: [AuthGuard]}
+          {path: 'transaction', component: TransactionPageComponent, canActivate: [AuthGuard]},
+          {path: 'transactions', component: TransactionsPageComponent, canActivate: [AuthGuard]}
         ]
       }
       ]

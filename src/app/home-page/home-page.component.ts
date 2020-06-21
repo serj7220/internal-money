@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../account/shared/services/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,8 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  linkLogin: string = 'account/login'
+  linkRegister: string = 'account/registration'
 
-  ngOnInit(): void {
+  constructor(public auth: AuthService) { }
+
+  ngOnInit(){
+    if (this.auth.isAuthenticated()){
+      this.linkLogin = this.linkRegister = 'account/dashboard'
+    } else {
+      this.linkLogin = 'account/login'
+      this.linkRegister = 'account/registration'
+    }
   }
 }

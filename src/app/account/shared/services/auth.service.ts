@@ -4,6 +4,7 @@ import {Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 
 import {DbAuthResponse, User} from '../../../shared/interfaces';
+import {environment} from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthService{
@@ -17,7 +18,7 @@ export class AuthService{
   }
 
   login(user: User): Observable<any>{
-    return this.http.post('http://193.124.114.46:3001/sessions/create', user)
+    return this.http.post(`${environment.DbLoginUrl}`, user)
       .pipe(
         tap(this.setToken),
         catchError(this.handleError.bind(this))
@@ -32,13 +33,15 @@ export class AuthService{
     return !!this.token
   }
 
-  private handleError(error: HttpErrorResponse) {
+  // temp private
+  handleError(error: HttpErrorResponse) {
     const message = error.error
     this.error$.next(message)
     return throwError(error)
   }
 
-  private setToken(response: DbAuthResponse | null){
+  //temp private
+  setToken(response: DbAuthResponse | null){
     if(response){
       localStorage.setItem('db-token', response.id_token)
     } else {

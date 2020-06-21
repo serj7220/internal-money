@@ -2,9 +2,13 @@
   <h1>
     <a routerLink="/">Parrot Wings</a>
   </h1>
+  <span *ngIf="auth.isAuthenticated()">{{user.username}}. Your Balance: {{user.balance}} $</span>
   <ul *ngIf="auth.isAuthenticated()">
     <li routerLinkActive="active">
       <a [routerLink]="['/account', 'dashboard']">My Account</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/account', 'transactions']">History</a>
     </li>
     <li>
       <a href="#" (click)="logout($event)">Logout</a>

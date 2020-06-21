@@ -1,0 +1,38 @@
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Date/Time</th>
+      <th>Correspondent Name</th>
+      <th>Transaction amount</th>
+      <th>Resulting balance</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td></td>
+        <td>
+          <div class="form-control">
+            <input type="text" placeholder="Date(dd.mm.yyyy) ..." [(ngModel)]="searchByDate">
+          </div>
+        </td>
+        <td>
+          <div class="form-control">
+            <input type="text" placeholder="Name ..." [(ngModel)]="searchByName">
+          </div>
+        </td>
+        <td>
+          <div class="form-control">
+            <input type="text" placeholder="Amount ..." [(ngModel)]="searchByAmount">
+          </div>
+        </td>
+      </tr>  <!-- | searchName:searchByName -->
+      <tr *ngFor="let tr of transactions | searchName:searchByName | searchDate:searchByDate; let idx = index">
+        <td>{{ idx + 1}}.</td>
+        <td>{{ tr.date | date:'medium':null:'ru' }}</td>
+        <td>{{ tr.username }}</td>
+        <td>{{ tr.amount }}</td>
+        <td>{{ tr.balance }}</td>
+    </tr>
+  </tbody>
+</table>
