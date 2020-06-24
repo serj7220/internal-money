@@ -3,6 +3,7 @@ import {UserService} from '../shared/services/user.service';
 import {Subscription} from 'rxjs';
 import {User} from '../../shared/interfaces';
 import {AuthService} from '../shared/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -16,7 +17,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private auth: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.uSub) this.uSub.unsubscribe()
+  }
+
+  newTransaction(event: Event) {
+    event.preventDefault()
+    this.router.navigate(['/account', 'transaction'])
   }
 }
 

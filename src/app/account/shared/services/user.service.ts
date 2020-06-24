@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {User, UserResponse} from '../../../shared/interfaces';
+import {User, UserFilter, UserList, UserResponse} from '../../../shared/interfaces';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import {AuthService} from './auth.service';
 
@@ -10,6 +10,7 @@ import {AuthService} from './auth.service';
 export class UserService {
 
   user: User = new Object()
+  users: UserList[] = []
 
   constructor(
     private auth: AuthService,
@@ -27,7 +28,18 @@ export class UserService {
       }))
   }
 
-  capitalize(str) {
+  getUsersFiltered(filter: UserFilter):Observable<User[]>{
+    return this.http.post(`${environment.DbListUsers}`, filter)
+      .pipe(map((response: UserList[]) => {
+        this.users = response
+        return this.users
+      }))
+  }
+
+// this.users.id = response
+// return response
+
+capitalize(str) {
     return str.replace(/(^|\s)\S/g, function(a) {return a.toUpperCase()})
   }
 

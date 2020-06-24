@@ -4,6 +4,7 @@ export interface User {
   email?: string
   password?: string
   balance?: number
+  name?: string
 }
 
 export interface UserResponse {
@@ -25,5 +26,14 @@ export interface Transaction {
   username: string
   amount: number
   balance: number
+}
+
+export interface UserFilter {
+  filter: string
+}
+
+export interface UserList {
+  id: number
+  name: string
 }
 

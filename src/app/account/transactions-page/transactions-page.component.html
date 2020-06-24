@@ -1,3 +1,4 @@
+<div *ngIf="transactions.length; else loading">
 <table>
   <thead>
     <tr>
@@ -27,7 +28,11 @@
           </div>
         </td>
       </tr>  <!-- | searchName:searchByName -->
-      <tr *ngFor="let tr of transactions | searchName:searchByName | searchDate:searchByDate; let idx = index">
+      <tr *ngFor="let tr of transactions
+       | searchName:searchByName
+       | searchDate:searchByDate
+       | searchAmount: searchByAmount;
+       let idx = index">
         <td>{{ idx + 1}}.</td>
         <td>{{ tr.date | date:'medium':null:'ru' }}</td>
         <td>{{ tr.username }}</td>
@@ -36,3 +41,10 @@
     </tr>
   </tbody>
 </table>
+</div>
+<ng-template #loading>
+  <h2 class="text-center">You have no transactions yet</h2>
+</ng-template>
+
+<!--
+-->

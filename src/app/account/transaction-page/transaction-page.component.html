@@ -1,1 +1,95 @@
-<p>transaction-page works!</p>
+<div class="main-container">
+    <span class="main-container__header">
+      Create New Transaction
+    </span>
+  <div class="main-container__balance">
+      <span class="header-balance">Your Balance: {{user.balance}} $</span>
+
+    <form  [formGroup]="form" (ngSubmit)="submit()">
+
+<!--    <div class="transfer-block">-->
+
+<!--      temp
+  <div
+    class="form-control"
+    [ngClass]="{invalid: (form.get('email').touched || submitted)&& form.get('email').invalid}"
+  >
+
+-->
+      <div
+        class="correspondent-name form-control"
+        [ngClass]="{invalid: form.get('correspondent').touched && form.get('correspondent').invalid}"
+      >
+
+        <label for="correspondent">Enter Correspondent Name:</label>
+        <input
+          type="text"
+          placeholder="Correspondent ..."
+          class="search-input"
+          name="correspondent"
+          id="correspondent"
+          autocomplete="off"
+          formControlName="correspondent"
+          (input)="searchCorrespondent()"
+        >
+        <div
+          *ngIf="form.get('correspondent').touched && form.get('correspondent').invalid"
+          class="validation"
+        >
+          <small *ngIf="form.get('correspondent').errors.required">
+            The correspondent name field is required
+          </small>
+        </div>
+
+
+        <div
+          class="correspondents-list"
+          [ngClass]="{hide: selected}"
+        >
+          <ul>
+            <li
+              *ngFor="let user of users | correspondentName:form.get('correspondent').value"
+              (click)="onSelect(user)">
+              {{user.name}}
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div
+        class="amount form-control"
+        [ngClass]="{invalid: form.get('amount').touched && form.get('amount').invalid}"
+      >
+        <label for="amount">Enter Amount:</label>
+        <input
+          type="text"
+          placeholder="0.00 $"
+          class="search-input"
+          name="amount"
+          id="amount"
+          autocomplete="off"
+          formControlName="amount"
+          [textMask]="{mask: currencyMask}"
+        >
+        <div
+          *ngIf="form.get('amount').touched && form.get('amount').invalid"
+          class="validation"
+        >
+          <small *ngIf="form.get('amount').errors.required">
+            The amount field is required
+          </small>
+        </div>
+
+      </div>
+
+      <button
+        class="btn btn-blue button-transfer"
+        type="submit"
+        [disabled]="form.invalid"
+      >Transfer Money</button>
+
+    </form>
+
+  </div>
+</div>
