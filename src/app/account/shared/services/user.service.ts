@@ -1,15 +1,17 @@
-import {Injectable} from '@angular/core';
+import {Observable, throwError as observableThrowError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {User, UserResponse} from '../../../shared/interfaces';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+
+import {User, UserFilter, UserList, UserResponse} from '../../../shared/interfaces';
 import {environment} from 'src/environments/environment';
 import {AuthService} from './auth.service';
 
 @Injectable({ providedIn: "root" })
 export class UserService {
 
-  user: User = new Object()
+  public user: User = new Object()
+  users: UserList[] = []
 
   constructor(
     private auth: AuthService,
@@ -24,6 +26,14 @@ export class UserService {
         this.user.email = response.user_info_token.email
         this.user.balance = response.user_info_token.balance
         return this.user
+      }), catchError((error: any) => observableThrowError(error)))
+  }
+
+  getUsersFiltered(filter: UserFilter):Observable<User[]>{
+    return this.http.post(`${environment.DbListUsers}`, filter)
+      .pipe(map((response: UserList[]) => {
+        this.users = response
+        return this.users
       }))
   }
 

@@ -4,5 +4,5 @@ export interface Environment {
   DbCreateUserUrl: string
   DbUserInfoUrl: string
   DbListTransUrl: string
-  DbTransUrl: string
+  DbListUsers: string
 }

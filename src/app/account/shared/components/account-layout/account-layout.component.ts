@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+
 import {AuthService} from '../../services/auth.service';
 import {UserService} from '../../services/user.service';
 import {User} from '../../../../shared/interfaces';
-import {Subscription} from 'rxjs';
+import {Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-account-layout',
@@ -22,13 +24,7 @@ export class AccountLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    if(this.auth.isAuthenticated()){
-      this.uSub = this.userService.getUser().subscribe(user => {
-        this.user = user
-        this.user.username = this.userService.capitalize(this.user.username)
-      })
-    }
-
+    this.loadUser()
   }
 
   logout(event: Event) {
@@ -37,7 +33,14 @@ export class AccountLayoutComponent implements OnInit, OnDestroy {
     this.router.navigate(['/account', 'login'])
   }
 
-    ngOnDestroy() {
-      if(this.uSub) this.uSub.unsubscribe()
+  loadUser(){
+    if (this.auth.isAuthenticated()){
+      this.uSub = this.userService.getUser().subscribe(user => {
+        this.user = user
+        this.user.username = this.userService.capitalize(this.user.username)
+      })
     }
+  }
+
+  ngOnDestroy() {if(this.uSub) this.uSub.unsubscribe()}
 }

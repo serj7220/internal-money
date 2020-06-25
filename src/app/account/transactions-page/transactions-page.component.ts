@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
+
 import {TransactionsService} from '../../shared/transactions.service';
-import {Transaction} from '../../shared/interfaces';
+import {Transaction, User} from '../../shared/interfaces';
 
 @Component({
   selector: 'app-transactions-page',
@@ -10,11 +11,14 @@ import {Transaction} from '../../shared/interfaces';
 })
 export class TransactionsPageComponent implements OnInit, OnDestroy {
 
-  transactions: Transaction[]
+  transactions: Transaction[] = []
   tSub: Subscription
+  user: User = new Object()
   searchByName = ''
   searchByDate = ''
   searchByAmount = ''
+
+
 
   constructor(
     private transactionsService: TransactionsService,

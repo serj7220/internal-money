@@ -5,8 +5,8 @@
     <span class="available-text">#ID: {{user.id}}</span>
     <div class="main-container__balance">
       <span class="header-balance">Parrot Wings Balance</span>
-      <span class="summ-balance">{{user.balance}} $</span>
+      <span class="summ-balance" *ngIf="user.balance">{{user.balance.toFixed(2)}} $</span>
       <span class="available-text">Available</span>
-      <a href="#" class="transfer-money-link">Transfer Money</a>
+      <a href="#" (click)="newTransaction($event)" class="transfer-money-link">Transfer Money</a>
     </div>
 </div>
