@@ -1,12 +1,12 @@
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
-import {User, UserFilter} from '../../shared/interfaces';
+import {NewTransaction, User, UserFilter} from '../../shared/interfaces';
+import {TransactionsService} from '../../shared/transactions.service';
 import {UserService} from '../shared/services/user.service';
 import {AuthService} from '../shared/services/auth.service';
-
 
 @Component({
   selector: 'app-transaction-page',
@@ -14,15 +14,14 @@ import {AuthService} from '../shared/services/auth.service';
   styleUrls: ['./transaction-page.component.scss']
 })
 export class TransactionPageComponent implements OnInit, OnDestroy {
+  user: User = new Object()
   users: User[] = []
   uSub: Subscription
-  // correspondentName = ''
+  tSub: Subscription
   filter: UserFilter = {filter: ""}
   selected = false
-  // userName = ''
-  // amount = ''
-  user: User = new Object()
   form: FormGroup
+  newTransaction: NewTransaction
 
   currencyMask = createNumberMask({
     prefix: '',
@@ -38,16 +37,14 @@ export class TransactionPageComponent implements OnInit, OnDestroy {
     allowLeadingZeroes: false
   });
 
-
   constructor(
     public auth: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private transactionsService: TransactionsService
   ) { }
 
   ngOnInit() {
-    if (this.auth.isAuthenticated()) {
-      this.uSub = this.userService.getUser().subscribe(user => {this.user = user})
-    }
+    this.loadUser()
 
     this.form = new FormGroup({
       correspondent: new FormControl(null, [
@@ -68,22 +65,39 @@ export class TransactionPageComponent implements OnInit, OnDestroy {
 
   searchCorrespondent() {
     if(this.form.value.correspondent){
-      this.filter.filter = this.form.value.correspondent  //this.correspondentName
+      this.filter.filter = this.form.value.correspondent
       this.uSub = this.userService.getUsersFiltered(this.filter).subscribe(users => {
         this.users = users
       })
     } else {
       this.users = []
-      // this.correspondentName = ''
       this.selected = false
     }
   }
 
+  loadUser(){
+    if (this.auth.isAuthenticated()) {
+      this.uSub = this.userService.getUser().subscribe(user => {
+        this.user = user
+        this.form.get('amount').setValidators(Validators.max(this.user.balance))
+      })
+    }
+  }
+
   submit() {
-    console.log(this.form.value.correspondent, +this.form.value.amount.split(' ')[0])
+    this.newTransaction = {
+      name: this.form.value.correspondent,
+      amount: this.form.value.amount.split(' ')[0]
+    }
+
+    this.tSub = this.transactionsService.newTransaction(this.newTransaction).subscribe(() => {
+      this.form.reset()
+      this.loadUser()
+    })
   }
 
   ngOnDestroy(){
     if (this.uSub){this.uSub.unsubscribe()}
+    if (this.tSub){this.tSub.unsubscribe()}
   }
 }

@@ -1,15 +1,16 @@
-import {Injectable} from '@angular/core';
+import {Observable, throwError as observableThrowError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+
 import {User, UserFilter, UserList, UserResponse} from '../../../shared/interfaces';
-import {Observable, of} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import {AuthService} from './auth.service';
 
 @Injectable({ providedIn: "root" })
 export class UserService {
 
-  user: User = new Object()
+  public user: User = new Object()
   users: UserList[] = []
 
   constructor(
@@ -25,7 +26,7 @@ export class UserService {
         this.user.email = response.user_info_token.email
         this.user.balance = response.user_info_token.balance
         return this.user
-      }))
+      }), catchError((error: any) => observableThrowError(error)))
   }
 
   getUsersFiltered(filter: UserFilter):Observable<User[]>{
@@ -36,10 +37,7 @@ export class UserService {
       }))
   }
 
-// this.users.id = response
-// return response
-
-capitalize(str) {
+  capitalize(str) {
     return str.replace(/(^|\s)\S/g, function(a) {return a.toUpperCase()})
   }
 

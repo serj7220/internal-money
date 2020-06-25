@@ -3,19 +3,10 @@
       Create New Transaction
     </span>
   <div class="main-container__balance">
-      <span class="header-balance">Your Balance: {{user.balance}} $</span>
+      <span class="header-balance" *ngIf="user.balance">Your Balance: {{user.balance.toFixed(2)}} $</span>
 
     <form  [formGroup]="form" (ngSubmit)="submit()">
 
-<!--    <div class="transfer-block">-->
-
-<!--      temp
-  <div
-    class="form-control"
-    [ngClass]="{invalid: (form.get('email').touched || submitted)&& form.get('email').invalid}"
-  >
-
--->
       <div
         class="correspondent-name form-control"
         [ngClass]="{invalid: form.get('correspondent').touched && form.get('correspondent').invalid}"
@@ -79,6 +70,12 @@
           <small *ngIf="form.get('amount').errors.required">
             The amount field is required
           </small>
+          <small *ngIf="form.get('amount').errors.max">
+            You want to transfer
+            {{form.get('amount').errors.max.actual}}<br>
+            But now available
+            {{form.get('amount').errors.max.max+' $'}}
+          </small>
         </div>
 
       </div>
@@ -90,6 +87,5 @@
       >Transfer Money</button>
 
     </form>
-
   </div>
 </div>

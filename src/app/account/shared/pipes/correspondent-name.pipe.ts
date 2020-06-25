@@ -1,9 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Transaction, User} from '../../../shared/interfaces';
+import {User} from '../../../shared/interfaces';
 
 @Pipe({name: 'correspondentName'})
 export class CorrespondentNamePipe implements PipeTransform{
-
   transform(users: User[], correspondentName = ''): User[] {
     if (!correspondentName) return users
 
@@ -15,5 +14,4 @@ export class CorrespondentNamePipe implements PipeTransform{
       return user.name.toLowerCase().includes(correspondentName.toLowerCase());
     });
   }
-
 }

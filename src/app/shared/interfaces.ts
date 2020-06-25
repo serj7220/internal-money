@@ -37,3 +37,8 @@ export interface UserList {
   name: string
 }
 
+export interface NewTransaction {
+  name: string
+  amount: string
+}
+

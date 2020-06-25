@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
 import {RxwebValidators} from '@rxweb/reactive-form-validators'
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 import {User} from '../../shared/interfaces';
 import {SignupService} from '../shared/services/signup.service';
+import {AuthService} from '../shared/services/auth.service';
+import {UserService} from '../shared/services/user.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-registration-page',
@@ -15,10 +18,14 @@ export class RegistrationPageComponent implements OnInit {
 
   form: FormGroup
   submitted = false
+  user: User
+  uSub: Subscription
 
   constructor(
     public signup: SignupService,
     private router: Router,
+    private auth: AuthService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -55,13 +62,22 @@ export class RegistrationPageComponent implements OnInit {
 
     this.signup.signup(user).subscribe(() => {
       this.form.reset()
+      this.loadUser()
       this.router.navigate(['/account', 'dashboard'])
       this.submitted = false
     })
+  }
+
+  loadUser(){
+    if (this.auth.isAuthenticated()){
+      this.uSub = this.userService.getUser().subscribe(user => {
+        this.user = user
+        this.user.username = this.userService.capitalize(this.user.username)
+      })
+    }
   }
 
   login() {
     this.router.navigate(['/account', 'login'])
   }
 }
-

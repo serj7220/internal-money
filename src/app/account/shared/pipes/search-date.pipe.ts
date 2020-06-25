@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {Transaction} from '../../../shared/interfaces';
-import {DatePipe} from '@angular/common';
 
 @Pipe({
   name: "searchDate"

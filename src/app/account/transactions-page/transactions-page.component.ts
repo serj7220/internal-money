@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
+
 import {TransactionsService} from '../../shared/transactions.service';
 import {Transaction, User} from '../../shared/interfaces';
 
@@ -16,6 +17,8 @@ export class TransactionsPageComponent implements OnInit, OnDestroy {
   searchByName = ''
   searchByDate = ''
   searchByAmount = ''
+
+
 
   constructor(
     private transactionsService: TransactionsService,

@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TextMaskModule} from 'angular2-text-mask';
+import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
+import {NgModule} from '@angular/core';
 
 import {AccountLayoutComponent} from './shared/components/account-layout/account-layout.component';
 import {LoginPageComponent} from './login-page/login-page.component';
@@ -53,6 +53,4 @@ import {CorrespondentNamePipe} from './shared/pipes/correspondent-name.pipe';
   exports: [RouterModule],
   providers: [AuthGuard, SignupService]
 })
-export class AccountModule {
-
-}
+export class AccountModule { }

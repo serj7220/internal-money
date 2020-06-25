@@ -8,10 +8,12 @@ export class SearchAmountPipe implements PipeTransform{
       return transactions;
     }
 
-    if (typeof +searchAmount === 'number') {
-      return transactions.filter((transaction) => {
-        return Math.abs(transaction.amount) === Math.abs(+searchAmount)
-      });
+    if(typeof searchAmount !== 'undefined') {
+      if (typeof +searchAmount === 'number') {
+        return transactions.filter((transaction) => {
+          return Math.abs(transaction.amount) === Math.abs(+searchAmount)
+        })
+      }
     }
   }
 }
